@@ -1,81 +1,80 @@
 ﻿#include <iostream>
-#include <fstream>
 #include <string>
-#include <cstring>
+#include <stdarg.h>
+
 using namespace std;
+
+void f()
+{
+    cout << "Mi primera funcion" << endl;
+}
+
+void print_data(int param)
+{
+    cout << param << endl;
+}
+void print_data(float param)
+{
+    cout << param << endl;
+}
+void print_data(string param)
+{
+    cout << param << endl;
+}
+void print_data(char param)
+{
+    cout << param << endl;
+}
+
+void print_int(int n, ...)
+{
+    va_list vl;
+    va_start(vl, n);
+    for (int i = 0; i < n; ++i)
+    {
+        print_data(va_arg(vl, int));
+    }
+    va_end(vl);
+}
+
+int suma(int a, int b)
+{
+    return a + b;
+}
+
+float suma(float a, float b)
+{
+    return a + b;
+}
+
+double suma(double a, double b);
 
 int main()
 {
-    auto file = "example.txt";
+    f();
 
-    ofstream output_file;
-    output_file.open(file, ios::trunc);
-    if (!output_file.is_open())
-    {
-        cout << "ERROR the file is not open" << endl;
-        return 0; // finish the execution
-    }
+    print_data(4.f);
+    print_data("hola que pasa");
+    print_data('h');
+    cout << "=================================" << endl;
+    print_int(5, 5, 21, 4, 6, 7);
+    cout << "=================================" << endl;
+    print_data(5);
+    print_data(suma(3, 4));
 
-    output_file << "This is an example\n This is other line\n";
-    output_file << "\tThe third and the last line\n";
+    print_data(suma(3.f, 4.5f));
+    print_data(static_cast<float>(suma(3.5, 4.5)));
 
-    output_file.close();
+    int x = 6;
+    auto lambda = [](int n) { return n * n; };
+    auto lambda2 = [x](int n) { return n * x; };
 
-    ifstream input_file;
-    input_file.open(file);
-    if (!input_file.is_open())
-    {
-        cout << "Unable to open file" << endl;
-        return 0;
-    }
-
-    string line;
-
-    while (getline(input_file, line))
-    {
-        cout << line << endl;
-    }
-
-    input_file.close();
+    cout << lambda(4) << " - " << lambda2(4);
 
     getchar();
+}
 
-    fstream file_stream;
-
-    /*ios::in - input
-    ios::out - output
-    ios::binary - binary
-    ios::ate - final del fichero
-    ios::app - para añadir datos
-    ios::trunc - truncar el fichero*/
-    string binary_text("This is a binary example");
-
-    auto binaryfile = "binary.bin";
-    file_stream.open(binaryfile, ios::out | ios::in | ios::binary | ios::trunc);
-    if (!file_stream.is_open())
-    {
-        cout << "ups" << endl;
-        getchar();
-        return 0;
-    }
-
-    file_stream.write(binary_text.c_str(), binary_text.size());
-    cout << "binary text = " << binary_text.c_str() << endl;
-    double d = 3.4;
-    file_stream.write(reinterpret_cast<char *>(&d), sizeof(d));
-    file_stream.seekg(0, file_stream.beg);
-
-    char *buffer = new char[binary_text.size() + 1];
-    buffer[binary_text.size()] = '\0';
-    //memset(buffer, '\0', binary_text.size() + 1);
-
-    file_stream.read(buffer, binary_text.size());
-    double read_double =0;
-    file_stream.read(reinterpret_cast<char *>(&read_double), sizeof(double));
-    file_stream.close();
-
-    cout << buffer << " - " << read_double << endl;
-
-    getchar();
-
+double suma(double a, double b)
+{
+    return a + b;
 }
