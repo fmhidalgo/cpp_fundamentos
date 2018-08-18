@@ -30,7 +30,7 @@ bool checkWin(const std::string& word, const std::string& solution)
 
 int main()
 {
-    std::string word("antonio");
+    std::string word("mistery");
     int attempts = 6;
     bool finish = false;
     std::string result{};
