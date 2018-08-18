@@ -68,6 +68,8 @@ int main()
     int x = 6;
     auto lambda = [](int n) { return n * n; };
     auto lambda2 = [x](int n) { return n * x; };
+    auto lambda3 = [=](int n) { return n * x; };
+    auto lambda4 = [&](int n) { return n * x; };
 
     cout << lambda(4) << " - " << lambda2(4);
 
