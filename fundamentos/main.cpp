@@ -1,92 +1,81 @@
 ﻿#include <iostream>
-#include <bitset>
-#include <conio.h>
-
+#include <fstream>
+#include <string>
+#include <cstring>
 using namespace std;
 
-int main() 
+int main()
 {
-    //if else switch
-    int x{ 1 };
+    auto file = "example.txt";
 
-    if (x > 0)
+    ofstream output_file;
+    output_file.open(file, ios::trunc);
+    if (!output_file.is_open())
     {
-        cout << "x is positive" << endl;
-    }
-    else if (x == 0)
-    {
-        cout << "x is 0" << endl;
-    }
-    else
-    {
-        cout << "x is negative" << endl;
-    }
-    x = 0;
-    auto cadena = x > 0 ? "x is positive" : "x is negative or zero";
-    cout << cadena << endl;
-
-    //bucles
-    
-    bool finishing_bombs = false;
-
-    //while(finishing_bombs == false)
-    do
-    {
-        if (_kbhit())
-        {
-            auto data = _getch();
-            switch (data)
-            {
-                case '1':
-                    cout << "Bomb 1" << endl;
-                    break;
-                case '2':
-                    cout << "Bomb 2" << endl;
-                    break;
-                case '3':
-                    cout << "Bomb 3" << endl;
-                    break;
-                case '4':
-                    cout << "Bomb 4" << endl;
-                    break;
-                case '5':
-                    cout << "Bomb 5" << endl;
-                    break;
-                case '6':
-                    cout << "Bomb 6" << endl;
-                    break;
-                case '7':
-                    cout << "Bomb 7" << endl;
-                    break;
-                case '8':
-                    cout << "Bomb 8" << endl;
-                    break;
-                case '9':
-                    cout << "Bomb 9" << endl;
-                    break;
-                case '0':
-                    cout << "Bomb 0" << endl;
-                    break;
-                case 27:
-                    cout << "bye bye";
-                    getchar();
-                    finishing_bombs = true;
-                    break;
-                case 0:
-                    break;
-                default:
-                    cout << "No bomb here" << endl;
-            }
-        }
-    } while (!finishing_bombs);
-
-    for (unsigned i = 0; i < 10; ++i)
-    {
-        cout << i << endl;
+        cout << "ERROR the file is not open" << endl;
+        return 0; // finish the execution
     }
 
-    //std::for_each algorithm include
-    //for de rango se vera en clases posteriores
+    output_file << "This is an example\n This is other line\n";
+    output_file << "\tThe third and the last line\n";
+
+    output_file.close();
+
+    ifstream input_file;
+    input_file.open(file);
+    if (!input_file.is_open())
+    {
+        cout << "Unable to open file" << endl;
+        return 0;
+    }
+
+    string line;
+
+    while (getline(input_file, line))
+    {
+        cout << line << endl;
+    }
+
+    input_file.close();
 
     getchar();
+
+    fstream file_stream;
+
+    /*ios::in - input
+    ios::out - output
+    ios::binary - binary
+    ios::ate - final del fichero
+    ios::app - para añadir datos
+    ios::trunc - truncar el fichero*/
+    string binary_text("This is a binary example");
+
+    auto binaryfile = "binary.bin";
+    file_stream.open(binaryfile, ios::out | ios::in | ios::binary | ios::trunc);
+    if (!file_stream.is_open())
+    {
+        cout << "ups" << endl;
+        getchar();
+        return 0;
+    }
+
+    file_stream.write(binary_text.c_str(), binary_text.size());
+    cout << "binary text = " << binary_text.c_str() << endl;
+    double d = 3.4;
+    file_stream.write(reinterpret_cast<char *>(&d), sizeof(d));
+    file_stream.seekg(0, file_stream.beg);
+
+    char *buffer = new char[binary_text.size() + 1];
+    buffer[binary_text.size()] = '\0';
+    //memset(buffer, '\0', binary_text.size() + 1);
+
+    file_stream.read(buffer, binary_text.size());
+    double read_double =0;
+    file_stream.read(reinterpret_cast<char *>(&read_double), sizeof(double));
+    file_stream.close();
+
+    cout << buffer << " - " << read_double << endl;
+
+    getchar();
+
 }
