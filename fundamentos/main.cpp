@@ -49,19 +49,17 @@ int main()
             --attempts;
         }
 
-        if (attempts == 0)
+        if (attempts == 0 || checkWin(word, result))
         {
-            printHangman();
             finish = true;
-        }
-        else
-        {
-            finish = checkWin(word, result);
         }
     }
     draw(word, result, attempts);
 
-    std::cout << std::endl << "YOU WIN!!!!!!" << std::endl;
+    if (!attempts)
+        printHangman();
+    else
+        std::cout << std::endl << "YOU WIN!!!!!!" << std::endl;
 
     getchar();
 }

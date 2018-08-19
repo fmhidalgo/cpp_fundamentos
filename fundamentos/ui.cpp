@@ -8,12 +8,11 @@ char getKey()
     char key = 0;
     do
     {
-        if (_kbhit())
-        {
-            key = _getch();
-            if (key == ESCAPE)
-                exit(1);
-        }
+        key = _getch();
+        
+        if (key == ESCAPE)
+            exit(0);
+
     } while (key < 'A'|| key > 'Z' && key < 'a' || key > 'z');
 
     return key;

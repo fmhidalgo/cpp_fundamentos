@@ -23,6 +23,8 @@ void draw(const std::string& word, const std::string& solution, const int& attem
         else
             std::cout << "_";
     }
+
+    std::cout << std::endl;
 }
 
 void clearScreen ()
