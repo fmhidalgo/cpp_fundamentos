@@ -30,36 +30,50 @@ bool checkWin(const std::string& word, const std::string& solution)
 
 int main()
 {
-    std::string word("mistery");
-    int attempts = 6;
-    bool finish = false;
-    std::string result{};
+    std::string word;
+    std::cin >> word;
+    char again;
 
-    while (!finish)
+    do 
     {
+        int attempts = 6;
+        bool finish = false;
+        std::string result{};
+        again = 'n';
+
+        while (!finish)
+        {
+            draw(word, result, attempts);
+            char key = getKey();
+
+            if (result.find(key) == std::string::npos && word.find(key) != std::string::npos)
+            {
+                result += key;
+            }
+            else
+            {
+                --attempts;
+            }
+
+            if (attempts == 0 || checkWin(word, result))
+            {
+                finish = true;
+            }
+        }
         draw(word, result, attempts);
-        char key = getKey();
 
-        if (result.find(key) == std::string::npos && word.find(key) != std::string::npos)
-        {
-            result += key;
-        }
+        if (!attempts)
+            printHangman();
         else
+            std::cout << std::endl << "YOU WIN!!!!!!" << std::endl;
+
+        if (!checkWin(word, result))
         {
-            --attempts;
+            std::cout << "write y to try again" << std::endl;
+            std::cin >> again;
         }
 
-        if (attempts == 0 || checkWin(word, result))
-        {
-            finish = true;
-        }
-    }
-    draw(word, result, attempts);
+    } while (again == 'y');
 
-    if (!attempts)
-        printHangman();
-    else
-        std::cout << std::endl << "YOU WIN!!!!!!" << std::endl;
-
-    getchar();
+    system("pause");
 }
