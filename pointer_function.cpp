@@ -15,7 +15,7 @@ int main()
     nombrePuntero(3);
 
     //C++11
-    std::function<void(int)> pointer11{&functionName};
+    std::function<void(int)> pointer11{&functionName}; //Sin parentesis la función
     pointer11(11);
 
     getchar();
