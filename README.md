@@ -1,5 +1,5 @@
 # openwebinars_cpp_fundamentos
-Fundamentos de programación en c++
+Fundamentos de programación en C++
 
 Este repo se divide en cuatro ramas, cada una nombrada por la sección a la que corresponde en el curso de fundamentos de programación en c++ de openwebinars:
 
